@@ -1,0 +1,9 @@
+trash
+coverage
+source
+/saves/*
+!/saves/base
+!/saves/base_test
+command
+enemies.json
+image
