@@ -4,6 +4,8 @@ source
 /saves/*
 !/saves/base
 !/saves/base_test
+!/saves/.keep
 command
 enemies.json
 image
+render
