@@ -3,11 +3,11 @@ require 'matrix'
 class Enemy
   attr_accessor :power, :position, :color, :radius_spawn
 
-  def initialize(init_health = 255, radius_spawn = 10, power = 1)
+  def initialize(init_health = 255.0, radius_spawn = 10, power = 1)
     @position = Vector[0.0, 0.0, 0.0]
     @radius_spawn = radius_spawn
     @power = power
-    init_health = [[init_health, 255].min, 1].max / 255.0
+    init_health = [[init_health, 255.0].min.to_f, 1.0].max.to_f / 255.0
     @color = Vector[init_health, 0, 0.4, 0.5].round(2)
   end
 

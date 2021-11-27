@@ -27,7 +27,7 @@ class Planner < State
       @context.calculate_number_enemies
       @context.spawn_enemies
       @context.update_position_enemies
-      file = File.open(File.expand_path('../pipe/command', __dir__), 'w')
+      file = File.open(File.expand_path('../pipe/command', __dir__.to_s), 'w')
       file.write("#{@context.player.command} #{@context.player.angle_x}")
       file.close
       exit if @context.player.command == 'exit'

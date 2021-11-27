@@ -9,9 +9,9 @@ require 'pathname'
 
 class GameLoader
   def initialize(filename = 'base')
-    @filename_player = File.expand_path("../../saves/#{filename}/player.yaml", __dir__)
-    @filename_setting = File.expand_path("../../saves/#{filename}/setting.yaml", __dir__)
-    @filename_enemies = File.expand_path("../../saves/#{filename}/enemies.json", __dir__)
+    @filename_player = File.expand_path("../../saves/#{filename}/player.yaml", __dir__.to_s)
+    @filename_setting = File.expand_path("../../saves/#{filename}/setting.yaml", __dir__.to_s)
+    @filename_enemies = File.expand_path("../../saves/#{filename}/enemies.json", __dir__.to_s)
   end
 
   def load

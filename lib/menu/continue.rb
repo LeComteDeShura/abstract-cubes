@@ -63,7 +63,7 @@ class Continue < State
 
   def name_saves
     dir = '../../saves/*'
-    dir = File.expand_path(dir, __dir__)
+    dir = File.expand_path(dir, __dir__.to_s)
     path_name_saves = Dir[dir].select { |file| File.directory?(file) }
     name_saves = path_name_saves.map { |string| string.slice(dir.size - 1..string.length) }
     name_saves.delete('base')

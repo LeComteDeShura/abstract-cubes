@@ -6,14 +6,14 @@ require 'json'
 class AppContext < Context
   attr_accessor :player, :enemies, :flag, :difficult_game, :number_enemies, :enemy_command, :name_save, :setting, :js
 
-  def initialize(state, player=nil, setting=nil, enemies = [])
+  def initialize(state, player = nil, setting = nil, enemies = [])
     super(state)
     @name_save = ''
     @player = player
     @enemies = enemies
     @setting = setting
     @flag = true
-    
+
     @min_enemies = setting.min_enemies
     @path_to_mesh_enemy = setting.path_to_mesh_enemy
     @difficult_game = setting.difficult_game
@@ -23,8 +23,8 @@ class AppContext < Context
     spawn_enemies
     update_position_enemies
     if setting.on_render
-      Process.fork do
-          system(File.expand_path("../renderer/render", __dir__))
+      fork do
+        system(File.expand_path("../renderer/render", __dir__.to_s))
       end
     end
   end
@@ -49,11 +49,11 @@ class AppContext < Context
   end
 
   def render
-    file = File.open(File.expand_path("../pipe/image", __dir__), "r")
-    image = file.read()
+    file = File.open(File.expand_path("../pipe/image", __dir__.to_s), "r")
+    image = file.read
     file.close
     print "\e[1;1H"
-    print image
+    print image.to_s
   end
 
   def calculate_number_enemies
@@ -83,9 +83,9 @@ class AppContext < Context
       }
       i += 1
     end
-    path = File.expand_path("../pipe/enemies.json", __dir__)
+    path = File.expand_path("../pipe/enemies.json", __dir__.to_s)
     # path = '../pipe/enemies.json'
-    # path = File.expand_path(path, __dir__)
+    # path = File.expand_path(path, __dir__.to_s)
     File.open(path, 'w') do |file|
       JSON.dump(@js, file)
     end

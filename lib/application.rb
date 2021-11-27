@@ -5,7 +5,7 @@ require_relative './ser_des/config_loader'
 
 class Application
   def run
-    player, setting = ConfigLoader.load(File.expand_path('../saves/base', __dir__))
+    player, setting = ConfigLoader.load(File.expand_path('../saves/base', __dir__.to_s))
     context = AppContext.new(Menu.new, player, setting)
     loop do
       context.do
