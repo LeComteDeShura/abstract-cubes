@@ -1,0 +1,22 @@
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Style/StringLiterals:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Lint/UselessAssignment:
+  Enabled: false
+Layout/LineLength: # 124/120
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
