@@ -1,0 +1,7 @@
+class GameLoader
+  def initialize: (?::String filename) -> void
+
+  def load: () -> ::Array[untyped]
+
+  def valid?: () -> untyped
+end

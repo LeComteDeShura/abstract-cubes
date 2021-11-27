@@ -1,0 +1,7 @@
+class ConfigLoader
+  def initialize: (::String file) -> void
+
+  def load: () -> ::Array[untyped]
+
+  def self.load: (::String file) -> untyped
+end

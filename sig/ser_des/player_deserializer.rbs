@@ -1,0 +1,5 @@
+class PlayerDeserializer
+  def initialize: (untyped hash) -> void
+
+  def deserialize: () -> untyped
+end

@@ -1,0 +1,19 @@
+class Setting
+  attr_accessor health_enemy: untyped
+
+  attr_accessor power_enemy: untyped
+
+  attr_accessor spawn_time_enemy: untyped
+
+  attr_accessor min_enemies: untyped
+
+  attr_accessor path_to_mesh_enemy: untyped
+
+  attr_accessor difficult_game: untyped
+
+  attr_accessor radius_spawn: untyped
+
+  attr_accessor on_render: untyped
+
+  def initialize: (untyped health_enemy, untyped power_enemy, untyped spawn_time_enemy, untyped min_enemies, untyped path_to_mesh_enemy, untyped radius_spawn, untyped difficult_game, untyped on_render) -> void
+end

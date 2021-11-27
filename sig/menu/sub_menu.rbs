@@ -1,0 +1,13 @@
+class SubMenu < State
+  def initialize: () -> void
+
+  def s_key: () -> (::String | "up" | "down")
+
+  def s_key_timeout: (untyped time) -> untyped
+
+  def print_menu: () -> untyped
+
+  def do: () -> untyped
+
+  def next: () -> untyped
+end

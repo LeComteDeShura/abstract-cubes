@@ -1,0 +1,31 @@
+class AppContext < Context
+  attr_accessor player: untyped
+
+  attr_accessor enemies: untyped
+
+  attr_accessor flag: untyped
+
+  attr_accessor difficult_game: untyped
+
+  attr_accessor number_enemies: untyped
+
+  attr_accessor enemy_command: untyped
+
+  attr_accessor name_save: untyped
+
+  attr_accessor setting: untyped
+
+  attr_accessor js: untyped
+
+  def initialize: (untyped state, ?untyped? player, ?untyped? setting, ?untyped enemies) -> void
+
+  def load: (untyped player, untyped setting, untyped enemies, untyped name_save) -> untyped
+
+  def render: () -> untyped
+
+  def calculate_number_enemies: () -> untyped
+
+  def spawn_enemies: () -> untyped
+
+  def update_position_enemies: () -> untyped
+end
