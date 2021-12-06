@@ -6,7 +6,7 @@ class EnemiesMove < State
     @context.enemies.each do |enemy|
       @context.flag = enemy.do @context.player.position
       unless @context.flag
-        @context.player.take_damage enemy.power # метод player на получение урона
+        @context.player.take_damage enemy.power
       end
 
       @context.flag = true

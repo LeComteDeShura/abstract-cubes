@@ -988,18 +988,16 @@ public:
     void loadModels(string _fileObjects) {
         this->fileObjects = _fileObjects;
         json js;
-        bool flag = true;
 
-        js = readJson(_fileObjects);
-        cout << js << endl;
-        // while(flag){
-        //     cout << "Loading" << endl;
-        //     try {
-        //       flag = false;
-        //     } catch (const std::exception& e) {
-        //         flag = true;
-        //     }
-        // }
+        bool flag = true;
+        while(flag){
+            try {
+              js = readJson(_fileObjects);
+              flag = false;
+            } catch (...) {
+              flag = true;
+            }
+        }
 
         numberModels = 0;
         models.clear();
@@ -1245,8 +1243,8 @@ vec2 resolution;
 int main(){
 
     vec4 rayOrigin(0, 0, 0, 1);
-    int x = 150;
-    int y = 150*2.6;
+    int x = 50;
+    int y = 50*2.6;
     Window window(x, y, rayOrigin);
     window.init();
     window.loadModels("lib/pipe/enemies.json");

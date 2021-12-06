@@ -51,7 +51,7 @@ class Player
   def intersect_enemy(position)
     position = @position - position
     b = position.dot(@ray_direction)
-    c = position.dot(position) - 0.5 * 0.5
+    c = position.dot(position) - 1 * 1
     h = b * b - c
     return Vector[-1.0, -1.0] if h < 0.0
 

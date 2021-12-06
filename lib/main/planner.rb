@@ -8,20 +8,6 @@ require 'timeout'
 require 'io/console'
 
 class Planner < State
-  # def render
-  #   print "\e[1;1H"
-  #   print "направление камеры: #{@context.player.ray_direction.round(2)}\n"
-  #   print "позиция игрока: #{@context.player.position}\n"
-  #   print "здоровье игрока: #{@context.player.health}\n"
-  #   print "позиции врагов:\n"
-  #   p @context.number_enemies
-  #   i = 0
-  #   @context.enemies.each do |enemy|
-  #     print "#{i}) #{enemy.position} #{enemy.color.round(2)}\n"
-  #     i += 1
-  #   end
-  # end
-
   def do
     if @context.player.command != ''
       @context.calculate_number_enemies
