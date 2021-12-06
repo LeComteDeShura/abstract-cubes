@@ -1,0 +1,9 @@
+---
+health_enemy: 255
+power_enemy: 1
+spawn_time_enemy: 10
+min_enemies: 1
+path_to_mesh_enemy: objects/cacodemon.obj
+difficult_game: 1
+radius_spawn: 15
+on_render: false

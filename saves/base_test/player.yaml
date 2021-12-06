@@ -1,0 +1,9 @@
+---
+health: 100
+position: !ruby/object:Vector
+  elements:
+  - 0
+  - 0
+  - 0
+angle_rotation: 0.05
+power: 50
