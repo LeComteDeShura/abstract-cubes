@@ -9,3 +9,4 @@ command
 enemies.json
 image
 render
+!/saves/base_test/enemies.json
