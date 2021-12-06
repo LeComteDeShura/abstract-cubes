@@ -7,6 +7,6 @@ describe GameSaver do
       expect(0).to be_a Integer
 
       game_saver = GameSaver.new('base_test', Player.new, Setting.new)
-     }
+    }
   end
 end

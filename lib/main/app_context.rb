@@ -22,10 +22,10 @@ class AppContext < Context
     calculate_number_enemies
     spawn_enemies
     update_position_enemies
-    if setting.on_render
-      fork do
-        system(File.expand_path("../renderer/render", __dir__.to_s))
-      end
+    return unless setting.on_render
+
+    fork do
+      system(File.expand_path("../renderer/render", __dir__.to_s))
     end
   end
 

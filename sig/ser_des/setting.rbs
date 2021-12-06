@@ -15,5 +15,5 @@ class Setting
 
   attr_accessor on_render: untyped
 
-  def initialize: (untyped health_enemy, untyped power_enemy, untyped spawn_time_enemy, untyped min_enemies, untyped path_to_mesh_enemy, untyped radius_spawn, untyped difficult_game, untyped on_render) -> void
+  def initialize: (?::Integer health_enemy, ?::Integer power_enemy, ?::Integer spawn_time_enemy, ?::Integer min_enemies, ?::Integer path_to_mesh_enemy, ?::Integer radius_spawn, ?::Integer difficult_game, ?::Integer on_render) -> void
 end
