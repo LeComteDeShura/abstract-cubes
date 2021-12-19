@@ -22,10 +22,11 @@ class AppContext < Context
     calculate_number_enemies
     spawn_enemies
     update_position_enemies
+
     return unless setting.on_render
 
-    fork do
-      system(File.expand_path("../renderer/render", __dir__.to_s))
+    Process.fork do
+      system(File.expand_path('../renderer/render', __dir__.to_s))
     end
   end
 
@@ -41,15 +42,16 @@ class AppContext < Context
     @player = player
     @setting = setting
     @enemies = enemies
-    p '   ', @enemies.length, @number_enemies, @difficult_game, @setting.radius_spawn
+
     calculate_number_enemies
     spawn_enemies
     update_position_enemies
-    p @enemies.length, @number_enemies
   end
 
   def render
-    file = File.open(File.expand_path("../pipe/image", __dir__.to_s), "r")
+    return unless setting.on_render
+
+    file = File.open(File.expand_path('../pipe/image', __dir__.to_s), 'r')
     image = file.read
     file.close
     print "\e[1;1H"
@@ -71,19 +73,19 @@ class AppContext < Context
   end
 
   def update_position_enemies
-    @js = JSON.parse("{\"js\": \"js\"}")
+    @js = JSON.parse('{"js": "js"}')
     @js.clear
     i = 0
 
     @enemies.each do |enemy|
       @js[i.to_s] = {
-        'mesh': @path_to_mesh_enemy,
-        'position': { 'x': enemy.position[0], 'y': enemy.position[1], 'z': enemy.position[2] },
-        'color': { 'r': enemy.color[0], 'g': enemy.color[1], 'b': enemy.color[2], 'a': enemy.color[3] }
+        mesh: @path_to_mesh_enemy,
+        position: { x: enemy.position[0], y: enemy.position[1], z: enemy.position[2] },
+        color: { r: enemy.color[0], g: enemy.color[1], b: enemy.color[2], a: enemy.color[3] }
       }
       i += 1
     end
-    path = File.expand_path("../pipe/enemies.json", __dir__.to_s)
+    path = File.expand_path('../pipe/enemies.json', __dir__.to_s)
     # path = '../pipe/enemies.json'
     # path = File.expand_path(path, __dir__.to_s)
     File.open(path, 'w') do |file|

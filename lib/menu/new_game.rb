@@ -9,7 +9,7 @@ class NewGame < State
     print "\e[48;2;0;0;0m"
     system 'clear'
 
-    print "Введите имя сохранения: "
+    print 'Введите имя сохранения: '
     @context.name_save = $stdin.gets.to_s.chomp
 
     GameSaver.new(@context.name_save, @context.player, @context.setting).save

@@ -7,7 +7,7 @@ require 'timeout'
 require 'io/console'
 
 class Continue < State
-  def initialize(statenext = "menu")
+  def initialize(statenext = 'menu')
     super()
     @statenext = statenext
     @name_saves = name_saves
@@ -15,36 +15,20 @@ class Continue < State
     @index = 1
   end
 
-  def s_key
+  def g_key
     loop do
       user_input = $stdin.getch
       case user_input
-      when 'q'
-        exit
       when "\r"
-        return "\n"
-      else
-        case user_input
-        when 'A'
-          return 'up'
-        when 'B'
-          return 'down'
-        end
+        return "\r"
+      when 'q'
+        return 'q'
+      when 'A'
+        return 'up'
+      when 'B'
+        return 'down'
       end
     end
-    ''
-  end
-
-  def s_key_timeout(time)
-    str = ''
-    begin
-      str = Timeout.timeout(time) { s_key }
-    rescue Timeout::Error
-      str = ''
-    end
-    $stdout.flush
-    $stdin.flush
-    str
   end
 
   def print_menu
@@ -75,15 +59,13 @@ class Continue < State
     system 'clear'
 
     key = ''
-    while key != "\n"
+    while key != "\r"
+      print_menu
+      key = g_key
       @index = [@index - 1, 1].max if key == 'up'
       @index = [@index + 1, @max_index + 1].min if key == 'down'
 
-      key = s_key_timeout 0.01
-
       exit if key == 'q'
-
-      print_menu
     end
   end
 

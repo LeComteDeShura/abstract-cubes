@@ -8,15 +8,18 @@ require 'timeout'
 require 'io/console'
 
 class Planner < State
+  def send_command(command, arg)
+    file = File.open(File.expand_path('../pipe/command', __dir__.to_s), 'w')
+    file.write("#{command} #{arg}")
+    file.close
+  end
+
   def do
     if @context.player.command != ''
       @context.calculate_number_enemies
       @context.spawn_enemies
       @context.update_position_enemies
-      file = File.open(File.expand_path('../pipe/command', __dir__.to_s), 'w')
-      file.write("#{@context.player.command} #{@context.player.angle_x}")
-      file.close
-      exit if @context.player.command == 'exit'
+      send_command @context.player.command, @context.player.angle_x
     end
     @context.player.command = ''
     @context.render

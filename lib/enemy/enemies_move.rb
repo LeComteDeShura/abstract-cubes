@@ -5,9 +5,7 @@ class EnemiesMove < State
   def do
     @context.enemies.each do |enemy|
       @context.flag = enemy.do @context.player.position
-      unless @context.flag
-        @context.player.take_damage enemy.power
-      end
+      @context.player.take_damage enemy.power unless @context.flag
 
       @context.flag = true
 

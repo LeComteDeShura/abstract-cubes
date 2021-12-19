@@ -15,29 +15,52 @@ class GameLoader
   end
 
   def load
-    data_setting = YAML.load_stream(File.open(@filename_setting))[0]
-    data_player = YAML.load_stream(File.open(@filename_player))[0]
+    player = load_player
+    setting = load_setting
+    enemies = load_enemy setting
+    [player, setting, enemies]
+  end
 
-    setting = SettingDeserializer.new(data_setting).deserialize
-    player = PlayerDeserializer.new(data_player).deserialize
+  def load_player
+    data_player = YAML.load_stream(File.open(@filename_player))[0]
+    PlayerDeserializer.new(data_player).deserialize
+  end
+
+  def load_setting
+    data_setting = YAML.load_stream(File.open(@filename_setting))[0]
+    SettingDeserializer.new(data_setting).deserialize
+  end
+
+  def load_enemy(setting)
+    js_file = File.open(@filename_enemies)
+    js_e = JSON.parse(js_file.read)
+    js_file.close
 
     enemies = []
-    lol = File.open(@filename_enemies).read
-    js = JSON.parse(lol)
+    (0..js_e.length - 1).each do |i|
+      position = Vector[js_e[i.to_s]['position']['x'],
+                        js_e[i.to_s]['position']['y'],
+                        js_e[i.to_s]['position']['z']]
 
-    (0..js.length - 1).each do |i|
-      position = Vector[js[i.to_s]['position']['x'],
-                        js[i.to_s]['position']['y'],
-                        js[i.to_s]['position']['z']]
-
-      color = Vector[js[i.to_s]['color']['r'],
-                     js[i.to_s]['color']['g'],
-                     js[i.to_s]['color']['b'],
-                     js[i.to_s]['color']['a']]
+      color = Vector[js_e[i.to_s]['color']['r'],
+                     js_e[i.to_s]['color']['g'],
+                     js_e[i.to_s]['color']['b'],
+                     js_e[i.to_s]['color']['a']]
       enemies.push Enemy.new(power = setting.power_enemy).load(position, color)
     end
+    enemies
+  end
 
-    [player, setting, enemies]
+  def self.load_player(file)
+    new(file).load_player
+  end
+
+  def self.load_setting(file)
+    new(file).load_setting
+  end
+
+  def self.load_enemy(file, setting)
+    new(file).load_enemy(setting)
   end
 
   def valid?
@@ -45,11 +68,3 @@ class GameLoader
     Pathname.new(@filename_player).exist?
   end
 end
-
-# player, setting = ConfigLoader.load(File.expand_path('save/base', __dir__))
-#
-# saver = GameSaver.new '1', player, setting
-# saver.save
-#
-# loader = GameLoader.new '1'
-# player2, setting2, enemies = loader.load

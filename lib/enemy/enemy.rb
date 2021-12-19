@@ -19,24 +19,28 @@ class Enemy
 
   def spawn(position_player, difficult_game)
     fi = rand(0..360)
-    @position = Vector[position_player[0] + @radius_spawn * Math.cos(fi),
-                       position_player[1] + @radius_spawn * Math.sin(fi), 0.0].round
+    @position = Vector[position_player[0] + (@radius_spawn * Math.cos(fi)),
+                       position_player[1] + (@radius_spawn * Math.sin(fi)), 0.0].round
     @power += difficult_game
 
     self
   end
 
   def do(position_player)
-    len = Math.sqrt((position_player[0] - @position[0])**2 + (position_player[1] - @position[1])**2)
+    len = Math.sqrt(((position_player[0] - @position[0])**2) + ((position_player[1] - @position[1])**2))
     return false if len.ceil <= 1
 
+    next_move position_player
+
+    true
+  end
+
+  def next_move(position_player)
     fi = Math.atan2(-(@position[1] - position_player[1]), -(@position[0] - position_player[0]))
     x = Math.cos(fi).round
     y = Math.sin(fi).round
     x.zero? ? x = 0 : y = 0
     @position += Vector[x, y, 0.0]
-
-    true
   end
 
   def dead?
@@ -46,7 +50,7 @@ class Enemy
   end
 
   def take_damage(power)
-    @color[0] = ((@color[0] * 255.0 - power) / 255.0).round(2)
+    @color[0] = (((@color[0] * 255.0) - power) / 255.0).round(2)
   end
 end
 
