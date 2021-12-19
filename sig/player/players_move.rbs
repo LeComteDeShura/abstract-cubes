@@ -1,9 +1,0 @@
-class PlayersMove < State
-  def set_key: () -> untyped
-
-  def get_key_timeout: (untyped time) -> untyped
-
-  def do: () -> untyped
-
-  def next: () -> untyped
-end

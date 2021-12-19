@@ -1,5 +1,0 @@
-class GameSaver
-  def initialize: (untyped filename, untyped player, untyped setting) -> void
-
-  def save: () -> untyped
-end

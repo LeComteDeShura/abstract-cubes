@@ -1,5 +1,0 @@
-class Planner < State
-  def do: () -> untyped
-
-  def next: () -> untyped
-end

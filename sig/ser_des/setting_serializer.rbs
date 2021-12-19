@@ -1,5 +1,0 @@
-class SettingSerializer
-  def initialize: (untyped setting) -> void
-
-  def serialize: () -> ::Hash[::String, untyped]
-end

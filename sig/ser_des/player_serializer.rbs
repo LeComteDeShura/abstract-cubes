@@ -1,5 +1,0 @@
-class PlayerSerializer
-  def initialize: (untyped player) -> void
-
-  def serialize: () -> ::Hash[::String, untyped]
-end
