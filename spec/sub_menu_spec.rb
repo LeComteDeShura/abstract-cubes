@@ -1,58 +1,45 @@
 require_relative '../lib/menu/sub_menu'
 
 describe SubMenu do
-  describe "#do" do
-    context "stdin.getch \r" do
-      it "transition_to Planner" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(SubMenu.new, player, setting)
-        expect(context.state.is_a?(SubMenu)).to eq true
+  describe '#next' do
+    let(:player) { GameLoader.load_player('../saves/base_test') }
+    let(:setting) { GameLoader.load_setting('../saves/base_test') }
+
+    context 'when pressed enter' do
+      let(:context) { AppContext.new(SubMenu.new, player, setting) }
+      let(:input) { StringIO.new("\r") }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(Planner)).to eq true
       end
+
+      subject { context.state }
+      it { is_expected.to be_a Planner }
     end
 
-    context "stdin.getch B\r" do
-      it "transition_to SubMenu" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(SubMenu.new, player, setting)
-        expect(context.state.is_a?(SubMenu)).to eq true
+    context 'when pressed arrow down and enter' do
+      let(:context) { AppContext.new(SubMenu.new, player, setting) }
+      let(:input) { StringIO.new("B\r") }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(SubMenu)).to eq true
       end
+      subject { context.state }
+      it { is_expected.to be_a SubMenu }
     end
 
-    context "stdin.getch BB\r" do
-      it "transition_to Continue" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(SubMenu.new, player, setting)
-        expect(context.state.is_a?(SubMenu)).to eq true
-        context.do
-        context.next
-        expect(context.state.is_a?(Continue)).to eq true
-      end
-    end
-
-    context "stdin.getch BBB\r" do
-      it "transition_to Exit" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(SubMenu.new, player, setting)
-        expect(context.state.is_a?(SubMenu)).to eq true
+    context 'when pressed arrow down and enter' do
+      let(:context) { AppContext.new(SubMenu.new, player, setting) }
+      let(:input) { StringIO.new("BB\r") }
+      before do
+        $stdin = input
         context.do
         context.next
       end
+      subject { context.state }
+      it { is_expected.to be_a Continue }
     end
   end
 end

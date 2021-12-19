@@ -1,27 +1,45 @@
+require_relative '../lib/player/players_move'
+
 describe PlayersMove do
-  describe "#do" do
-    context "stdin.getch m\r" do
-      it "transition_to SubMenu" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("m")
-        context = AppContext.new(PlayersMove.new, player, setting)
-        expect(context.state.is_a?(PlayersMove)).to eq true
+  describe '#next' do
+    let(:player) { GameLoader.load_player('../saves/base_test') }
+    let(:setting) { GameLoader.load_setting('../saves/base_test') }
+
+    context 'when pressed m key' do
+      let(:context) { AppContext.new(PlayersMove.new, player, setting) }
+      let(:input) { StringIO.new('m') }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(SubMenu)).to eq true
       end
+
+      subject { context.state }
+      it { is_expected.to be_a SubMenu }
     end
 
-    context "stdin.getch 0\r" do
-      it "transition_to Planner" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("B")
-        context = AppContext.new(PlayersMove.new, player, setting)
-        expect(context.state.is_a?(PlayersMove)).to eq true
+    context 'when pressed p key' do
+      let(:context) { AppContext.new(PlayersMove.new, player, setting) }
+      let(:input) { StringIO.new('p') }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(Planner)).to eq true
       end
+      subject { context.state }
+      it { is_expected.to be_a Planner }
+    end
+
+    context 'when pressed e key' do
+      let(:context) { AppContext.new(PlayersMove.new, player, setting) }
+      let(:input) { StringIO.new('e') }
+      before do
+        $stdin = input
+        context.do
+        context.next
+      end
+      subject { context.state }
+      it { is_expected.to be_a Planner }
     end
   end
 end

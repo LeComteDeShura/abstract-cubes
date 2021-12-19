@@ -1,43 +1,36 @@
+require_relative '../lib/main/planner'
+require_relative '../lib/menu/continue'
+require_relative '../lib/menu/menu'
 require_relative '../lib/menu/sub_menu'
 
 describe Continue do
-  describe "#do" do
-    context "stdin.getch \r" do
-      it "transition_to Planner" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(Continue.new, player, setting)
-        expect(context.state.is_a?(Continue)).to eq true
+  describe '#next' do
+    let(:player) { GameLoader.load_player('../saves/base_test') }
+    let(:setting) { GameLoader.load_setting('../saves/base_test') }
+
+    context 'when pressed enter' do
+      let(:context) { AppContext.new(Continue.new, player, setting) }
+      let(:input) { StringIO.new("\r") }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(Planner)).to eq true
       end
+
+      subject { context.state }
+      it { is_expected.to be_a Planner }
     end
 
-    context "stdin.getch \r" do
-      it "transition_to Planner" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(Continue.new("submenu"), player, setting)
-        expect(context.state.is_a?(Continue)).to eq true
+    context 'when pressed arrow down and enter' do
+      let(:context) { AppContext.new(Continue.new, player, setting) }
+      let(:input) { StringIO.new("B\r") }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(SubMenu)).to eq true
       end
-    end
-
-    context "stdin.getch \r" do
-      it "transition_to Planner" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(Continue.new, player, setting)
-        expect(context.state.is_a?(Continue)).to eq true
-        context.do
-        context.next
-        expect(context.state.is_a?(Menu)).to eq true
-      end
+      subject { context.state }
+      it { is_expected.to be_a Menu }
     end
   end
 end

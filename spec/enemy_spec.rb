@@ -49,7 +49,7 @@ describe Enemy do
     end
   end
 
-  describe "#take_damage" do
+  describe '#take_damage' do
     context 'health = 255, damage = 10' do
       let(:enemy) { Enemy.new health = 255 }
       it {
@@ -58,7 +58,7 @@ describe Enemy do
     end
   end
 
-  describe "#load" do
+  describe '#load' do
     context 'color = 0, position = 0, return self' do
       let(:enemy) { Enemy.new }
       it {
@@ -67,7 +67,7 @@ describe Enemy do
     end
   end
 
-  describe "#spawn" do
+  describe '#spawn' do
     context 'position player = 0, difficult_game = 0, return self' do
       let(:enemy) { Enemy.new }
       it {
@@ -84,7 +84,7 @@ describe Enemy do
     # end
   end
 
-  describe "#do" do
+  describe '#do' do
     context 'position player = [0,0,0], position enemy = [10,1,0]' do
       let(:enemy) { Enemy.new }
       it {

@@ -3,7 +3,7 @@ require_relative '../lib/ser_des/player_serializer'
 
 describe PlayerSerializer do
   describe '#serialize' do
-    let(:player) { Player.new(1, 1, Vector[1, 1, 1], 1) }
+    let(:player) { Player.new }
     let(:expected_result) do
       {
         'health' => player.health,

@@ -1,28 +1,25 @@
-# require_relative '../lib/main/app_context'
+require_relative '../lib/main/planner'
 
 describe Planner do
-  describe "#do" do
-    context "" do
-      it "transition_to PlayersMove" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        context = AppContext.new(Planner.new, player, setting)
-        expect(context.state.is_a?(Planner)).to eq true
-        context.do
-        context.next
-        expect(context.state.is_a?(PlayersMove)).to eq true
-      end
+  describe '#next' do
+    let(:player) { GameLoader.load_player('../saves/base_test') }
+    let(:setting) { GameLoader.load_setting('../saves/base_test') }
+
+    context 'when it is players turn' do
+      let(:context) { AppContext.new(Planner.new, player, setting) }
+      before { context.next }
+      subject { context.state }
+      it { is_expected.to be_a PlayersMove }
     end
 
-    context "" do
-      it "transition_to EnemiesMove" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        context = AppContext.new(Planner.new, player, setting)
-        expect(context.state.is_a?(Planner)).to eq true
-        context.do
+    context 'when it is enemies turn' do
+      let(:context) { AppContext.new(Planner.new, player, setting) }
+      before do
         context.flag = false
         context.next
-        expect(context.state.is_a?(EnemiesMove)).to eq true
       end
+      subject { context.state }
+      it { is_expected.to be_a EnemiesMove }
     end
   end
 end

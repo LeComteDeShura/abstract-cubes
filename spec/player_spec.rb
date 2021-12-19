@@ -14,22 +14,21 @@ describe Player do
     end
     context 'with arg' do
       subject do
-        Player.new health = 1000,
-                   power = -20,
-                   position = Vector[0, 0, 0],
+        Player.new health = [1000, -20],
+                   position = Vector[2, 2, 0],
                    angle_rotation = 0.02
       end
 
       it { expect(subject.health).to eq 100 }
       it { expect(subject.power).to eq 1 }
-      it { expect(subject.position).to eq Vector[0, 0, 0] }
+      it { expect(subject.position).to eq Vector[2, 2, 0] }
       it { expect(subject.angle_rotation).to eq 0.02 }
     end
   end
 
   describe '#dead?' do
     context 'health > 0' do
-      let(:player) { Player.new(health = 10) }
+      let(:player) { Player.new }
       it { expect(player.dead?).to be false }
     end
 
@@ -42,7 +41,7 @@ describe Player do
     end
   end
 
-  describe "#trans" do
+  describe '#trans' do
     context 'angle = 123 rad' do
       let(:player) { Player.new }
       it {
@@ -60,16 +59,16 @@ describe Player do
     end
   end
 
-  describe "#take_damage" do
+  describe '#take_damage' do
     context 'health = 100, damage = 10' do
-      let(:player) { Player.new health = 100 }
+      let(:player) { Player.new }
       it {
         expect(player.take_damage(10)).to eq 90
       }
     end
   end
 
-  describe "#sph_intersect" do
+  describe '#sph_intersect' do
     context 'ray direction = [1,0,0], position enemy= [10,0,0]' do
       let(:player) { Player.new }
       it {
@@ -78,12 +77,10 @@ describe Player do
     end
   end
 
-  describe "#do" do
+  describe '#do' do
     context 'key = \'exit\', enemies = nil' do
       let(:player) { Player.new }
-      it {
-        expect(player.do('exit', nil)).to eq [false, nil]
-      }
+      it { expect(player.do('q', nil)).to eq [false, nil] }
     end
 
     context 'key = \'right\', enemies = nil' do
@@ -102,15 +99,13 @@ describe Player do
 
     context 'key = \'up\', enemies = nil' do
       let(:player) { Player.new }
-      it {
-        expect(player.do('up', nil)).to eq [false, nil]
-      }
+      it { expect(player.do('w', nil)).to eq [false, nil] }
     end
 
     context 'key = \'down\', enemies = nil' do
       let(:player) { Player.new }
       it {
-        expect(player.do('down', nil)).to eq [false, nil]
+        expect(player.do('s', nil)).to eq [false, nil]
       }
     end
 
@@ -121,16 +116,16 @@ describe Player do
       }
     end
 
-    context 'key = \'0\', enemies = Array of Enemy' do
+    context ' key = \'0\', enemies = Array of Enemy' do
       let(:player) { Player.new }
       it {
-        enemy1 = Enemy.new(10)
-        enemy1.position = Vector[10, 0, 0]
-        enemies_input = [enemy1]
+        enemy = Enemy.new(10)
+        enemy.position = Vector[10, 0, 0]
+        enemies_input = [enemy]
 
-        enemy1.color = Vector[0.96, 0, 0.4, 0.5]
-        enemies_expected = [enemy1]
-        expect(player.do('0', enemies_input)).to eq [false, enemies_expected]
+        enemy.color = Vector[0.96, 0, 0.4, 0.5]
+        enemies_expected = [enemy]
+        expect(player.do('e', enemies_input)).to eq [false, enemies_expected]
       }
     end
   end

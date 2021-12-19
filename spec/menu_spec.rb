@@ -1,37 +1,33 @@
 require_relative '../lib/menu/menu'
 
 describe Menu do
-  describe "#do" do
-    context "stdin.getch \r" do
-      it "transition_to Continue" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(Menu.new, player, setting)
-        expect(context.state.is_a?(Menu)).to eq true
+  describe '#next' do
+    let(:player) { GameLoader.load_player('../saves/base_test') }
+    let(:setting) { GameLoader.load_setting('../saves/base_test') }
+
+    context 'when pressed enter' do
+      let(:context) { AppContext.new(Menu.new, player, setting) }
+      let(:input) { StringIO.new("\r") }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(Continue)).to eq true
       end
+
+      subject { context.state }
+      it { is_expected.to be_a Continue }
     end
 
-    context "stdin.getch B\r" do
-      it "transition_to NewGame" do
-        player, setting = ConfigLoader.load(File.expand_path('../saves/base_test', __dir__))
-        $stdin.should_receive(:getch).and_return("B")
-        $stdin.should_receive(:getch).and_return("\r")
-        context = AppContext.new(Menu.new, player, setting)
-        expect(context.state.is_a?(Menu)).to eq true
+    context 'when pressed arrow down and enter' do
+      let(:context) { AppContext.new(Menu.new, player, setting) }
+      let(:input) { StringIO.new("B\r") }
+      before do
+        $stdin = input
         context.do
         context.next
-        expect(context.state.is_a?(NewGame)).to eq true
       end
-    end
-
-    context "stdin.getch B\r" do
-      it "transition_to NewGame" do
-        menu = Menu.new
-        expect(menu.s_key_timeout(0.001)).to eq ''
-      end
+      subject { context.state }
+      it { is_expected.to be_a NewGame }
     end
   end
 end
